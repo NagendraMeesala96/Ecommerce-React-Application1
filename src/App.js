@@ -3,29 +3,30 @@ import Login from "./Components/Login";
 import SignUp from "./Components/Signup";
 import ProductsFeed from "./Components/ProductsFeed";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import {ToastContainer } from "react-toastify";
 import Cart from "./Components/Cart";
 import HotDeals from "./Components/Categories/HotDeals";
 import Cameras from "./Components/Categories/Cameras";
 import Fashion from "./Components/Categories/Fashion";
 import Laptops from "./Components/Categories/Laptops";
 import SmartPhone from "./Components/Categories/SmartPhones";
+import { useEffect } from "react";
 
 const ProtectedRoute = (props) => {
   const token = localStorage.getItem("AuthToken");
-  const hasLoggedIn = token != "";
-
+  const hasLoggedIn = token ? true : false ;
   if (hasLoggedIn) return props.children;
   return <Navigate to="/LogIn" />;
+  
 };
 
 const UnProtectedRoute = (props) => {
   const token = localStorage.getItem("AuthToken");
-  const hasLoggedIn = token != "";
-
+  const hasLoggedIn = token ? true : false ;
   if (hasLoggedIn) return <Navigate to="/Products/Feed" />;
   return props.children;
 };
+
 
 function App() {
   return (

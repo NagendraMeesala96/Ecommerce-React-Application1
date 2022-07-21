@@ -344,3 +344,6 @@ th,tr,td{
   cursor: pointer;
   margin-top: 10px;
 }
+.react-bootstrap-navBar{
+  color: white;
+}
