@@ -1,3 +1,8 @@
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Fragment, useState } from "react";
 import { GrMail, GrLocation, GrFacebookOption } from "react-icons/gr";
 import { GiSmartphone } from "react-icons/gi";
@@ -97,65 +102,34 @@ function Laptops() {
           </div>
         </div>
       </header>
-      <nav className="navbar bg-dark navbar-dark navbar-expand-lg">
-        <div className="container">
-          <button
-            className="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#links"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="links">
-            <ul className="navbar-nav ml">
-              <li className="nav-item">
-                <a href="/Products/Feed" className="nav-link">
-                  <AiFillHome /> Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/Products/Feed/hotDeals" className="nav-link">
-                  <FaHotTub /> Hot Deals
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/Products/Feed/Fashion" className="nav-link">
-                  <FaShopify /> Fashion
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="/Products/Feed/Laptops"
-                  className="nav-link"
-                  style={{ borderBottom: "3px solid red", color: "red" }}
-                >
-                  <BsLaptop /> Laptops
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/Products/Feed/SmartPhones" className="nav-link">
-                  <GiSmartphone /> Smartphones
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/Products/Feed/Cameras" className="nav-link">
-                  <AiFillCamera /> Cameras
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/Products/Feed/cart" className="nav-link">
-                  <BsCart /> Go To Cart
-                </a>
-              </li>
-              <li className="nav-item" id="log-out" style={{ float: "right" }}>
-                <a href="#" className="nav-link" onClick={handleLogOut}>
-                  <AiOutlineLogout /> Logout
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar bg="dark" expand="sm" className="react-bootstrap-navBar" variant="dark">
+          <Container>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-sm`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`} >
+                  Venom.
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-center flex-grow-1 pe-3">
+                  <Nav.Link href="/Products/Feed"><AiFillHome /> Home</Nav.Link>
+                  <Nav.Link href="/Products/Feed/hotDeals"><FaHotTub /> Hot Deals</Nav.Link>
+                  <Nav.Link href="/Products/Feed/Fashion"><FaShopify /> Fashion</Nav.Link>
+                  <Nav.Link href="/Products/Feed/Laptops" style={{ borderBottom: "3px solid red", color: "red" }}><BsLaptop /> Laptops</Nav.Link>
+                  <Nav.Link href="/Products/Feed/SmartPhones"><GiSmartphone /> Smartphones</Nav.Link>
+                  <Nav.Link href="/Products/Feed/Cameras"><AiFillCamera /> Cameras</Nav.Link>
+                  <Nav.Link href="/Products/Feed/Cart"><BsCart /> Go To Cart</Nav.Link>
+                </Nav>
+                <Nav.Link onClick={handleLogOut}><AiOutlineLogout /> Logout</Nav.Link>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
       <section className="deals-body">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>Welcome To Laptops page</h3>
