@@ -192,16 +192,18 @@ function ProductsFeed() {
         <div className="second-header">
           <div className="row">
             <div className="col-md-4 mt-3">
-              <h1 style={{ fontSize: 70 }}>
+              <h1 style={{ fontSize: 70 }} href="/">
                 <span style={{ color: "red" }}>.</span>VENOM
               </h1>
             </div>
             <div className="col-md-4 mt-3 search">
               <select className="form-select" id="category-dropdown">
                 <option>All Categories</option>
-                <option>Category 1</option>
-                <option>Category 2</option>
-                <option>Category 3</option>
+                <option>HotDeals</option>
+                <option>Laptops</option>
+                <option>SmartPhones</option>
+                <option>Fashion</option>
+                <option>Cameras</option>
               </select>
               <input
                 className="form-control"
