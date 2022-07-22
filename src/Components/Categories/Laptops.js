@@ -76,7 +76,11 @@ function Laptops() {
             <div className="col-md-4 mt-3 search">
               <select className="form-select" id="category-dropdown">
                 <option>All Categories</option>
-                <option>Category 1</option>
+                <option>HotDeals</option>
+                <option>Laptops</option>
+                <option>SmartPhones</option>
+                <option>Fashion</option>
+                <option>Cameras</option>
               </select>
               <input
                 className="form-control"
