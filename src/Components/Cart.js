@@ -23,11 +23,18 @@ import {
   FadeLoader,
 } from "spinners-react";
 import { FaHotTub, FaShopify } from "react-icons/fa";
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 function Cart() {
   const navigate = useNavigate();
@@ -42,9 +49,9 @@ function Cart() {
 
   const [loading, setLoading] = useState(false);
 
-  const [removeCartLoading, setRemoveCartLoading] = useState(false)
+  const [removeCartLoading, setRemoveCartLoading] = useState(false);
 
-  const [selectedTab,setSelectedTab] = useState(undefined);
+  const [selectedTab, setSelectedTab] = useState(undefined);
 
   const handleLogOut = () => {
     localStorage.setItem("AuthToken", "");
@@ -80,7 +87,7 @@ function Cart() {
     loadCart();
   }, []);
 
-  const removeProduct = (itemId,index) => {
+  const removeProduct = (itemId, index) => {
     const cartId = localStorage.getItem("cartId");
 
     setSelectedTab(index);
@@ -106,7 +113,6 @@ function Cart() {
           draggable: true,
           progress: undefined,
         });
-        
       })
       .catch((err) => {
         setRemoveCartLoading(false);
@@ -147,14 +153,18 @@ function Cart() {
         <div className="second-header">
           <div className="row">
             <div className="col-md-4 mt-3">
-              <h1 style={{ fontSize: 70 }}>
+              <h1 style={{ fontSize: 70 }} href="/Products/Feed">
                 <span style={{ color: "red" }}>.</span>VENOM
               </h1>
             </div>
             <div className="col-md-4 mt-3 search">
               <select className="form-select" id="category-dropdown">
                 <option>All Categories</option>
-                <option>Category 1</option>
+                <option>HotDeals</option>
+                <option>Laptops</option>
+                <option>SmartPhones</option>
+                <option>Fashion</option>
+                <option>Cameras</option>
               </select>
               <input
                 className="form-control"
@@ -182,121 +192,158 @@ function Cart() {
           </div>
         </div>
       </header>
-      <Navbar bg="dark" expand="sm" className="react-bootstrap-navBar" variant="dark">
-          <Container>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-sm`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
-              placement="end"
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`} >
-                  Venom.
-                </Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Nav className="justify-content-center flex-grow-1 pe-3">
-                  <Nav.Link href="/Products/Feed" style={{ borderBottom: "3px solid red", color: "red" }}><AiFillHome /> Home</Nav.Link>
-                  <Nav.Link href="/Products/Feed/hotDeals"><FaHotTub /> Hot Deals</Nav.Link>
-                  <Nav.Link href="/Products/Feed/Fashion"><FaShopify /> Fashion</Nav.Link>
-                  <Nav.Link href="/Products/Feed/Laptops"><BsLaptop /> Laptops</Nav.Link>
-                  <Nav.Link href="/Products/Feed/SmartPhones"><GiSmartphone /> Smartphones</Nav.Link>
-                  <Nav.Link href="/Products/Feed/Cameras"><AiFillCamera /> Cameras</Nav.Link>
-                </Nav>
-                <Nav.Link onClick={handleLogOut}><AiOutlineLogout /> Logout</Nav.Link>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
-          </Container>
-        </Navbar>
+      <Navbar
+        bg="dark"
+        expand="sm"
+        className="react-bootstrap-navBar"
+        variant="dark"
+      >
+        <Container>
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+          <Navbar.Offcanvas
+            id={`offcanvasNavbar-expand-sm`}
+            aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
+            placement="end"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
+                Venom.
+              </Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Nav className="justify-content-center flex-grow-1 pe-3">
+                <Nav.Link href="/Products/Feed">
+                  <AiFillHome /> Home
+                </Nav.Link>
+                <Nav.Link href="/Products/Feed/hotDeals">
+                  <FaHotTub /> Hot Deals
+                </Nav.Link>
+                <Nav.Link href="/Products/Feed/Fashion">
+                  <FaShopify /> Fashion
+                </Nav.Link>
+                <Nav.Link href="/Products/Feed/Laptops">
+                  <BsLaptop /> Laptops
+                </Nav.Link>
+                <Nav.Link href="/Products/Feed/SmartPhones">
+                  <GiSmartphone /> Smartphones
+                </Nav.Link>
+                <Nav.Link href="/Products/Feed/Cameras">
+                  <AiFillCamera /> Cameras
+                </Nav.Link>
+                <Nav.Link
+                  href="/Products/Feed/Cart"
+                  style={{ borderBottom: "3px solid red", color: "red" }}
+                >
+                  <BsCart /> Go To Cart
+                </Nav.Link>
+              </Nav>
+              <Nav.Link onClick={handleLogOut}>
+                <AiOutlineLogout /> Logout
+              </Nav.Link>
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
+        </Container>
+      </Navbar>
       <section className="cart-body">
-        
         <div className="container table-data">
-        {loading ? (
-                <SpinnerCircular
-                  size={50}
-                  thickness={100}
-                  speed={100}
-                  color="#36ad47"
-                  secondaryColor="rgba(0, 0, 0, 0.44)"
-                />
-              ) : (
-                false
-              )}
-              <table class="table table-hover mt-3 w-auto">
-                <tr className="ml-3">
-                  <th scope="col">S.No</th>
-                  {/* <th scope="col">Image</th> */}
-                  <th scope="col">Name</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Action</th>
-                </tr>
+          {loading ? (
+            <SpinnerCircular
+              size={50}
+              thickness={100}
+              speed={100}
+              color="#36ad47"
+              secondaryColor="rgba(0, 0, 0, 0.44)"
+            />
+          ) : (
+            false
+          )}
+          <TableContainer component={Paper} className="mt-3">
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ fontWeight: 'bold' }}>S.No</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Product Name</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Product Image</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Quantity</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Price</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
                 {cartItems.length > 0 ? (
-                  cartItems.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{index + 1}.</td>
-                        {/* <td>
-                          <img
-                            src={item.media.source}
-                            className="img-fluid img-thumbnail"
-                            // className='cart-img'
-                            // height={180}
-                            // width={200}
-                          />
-                        </td> */}
-                        <td>
-                          <b>{item.name}</b>
-                        </td>
-                        <td>{item.quantity}</td>
-                        <td>&#8377; {item.price.formatted * item.quantity}</td>
-                        <td>
-                          <button
-                            id="cart-remove-btn"
-                            onClick={() => {
-                              removeProduct(item.id, index);
-                            }}
-                          >
-                            {selectedTab == index ? (
-                              removeCartLoading ? (
-                                <SpinnerCircularFixed
-                                  size={50}
-                                  thickness={100}
-                                  speed={100}
-                                  color="rgba(57, 172, 140, 1)"
-                                  secondaryColor="rgba(0, 0, 0, 0.44)"
-                                />
-                              ) : (
-                                <b>Remove</b>
-                              )
+                  cartItems.map((item, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>{index + 1}.</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>
+                        <img
+                          src={item.media.source}
+                          className="cart-img"
+                          height={160}
+                          width={170}
+                        />
+                      </TableCell>
+                      <TableCell>{item.quantity}</TableCell>
+                      <TableCell>
+                        &#8377; {item.price.formatted * item.quantity}
+                      </TableCell>
+                      <TableCell>
+                        <button
+                          className="btn btn-danger"
+                          id="cart-remove-btn"
+                          onClick={() => {
+                            removeProduct(item.id, index);
+                          }}
+                        >
+                          {selectedTab == index ? (
+                            removeCartLoading ? (
+                              <SpinnerCircularFixed
+                                size={50}
+                                thickness={100}
+                                speed={100}
+                                color="rgba(57, 172, 140, 1)"
+                                secondaryColor="rgba(0, 0, 0, 0.44)"
+                              />
                             ) : (
                               <b>Remove</b>
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
+                            )
+                          ) : (
+                            <b>Remove</b>
+                          )}
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))
                 ) : (
-                  <td colSpan={7} style={{ fontSize: 40, textAlign: "center" }}>
+                  <TableCell
+                    colSpan={7}
+                    style={{ fontSize: 40, textAlign: "center" }}
+                  >
                     Cart is Empty
-                  </td>
+                  </TableCell>
                 )}
-                <tr>
-                  <td colSpan={3}></td>
-                  <td style={{ fontSize: 30 }}>
+                {cartItems.length > 0 ? 
+                <TableRow>
+                  <TableCell colSpan={4}></TableCell>
+                  <TableCell style={{ fontSize: 30 }}>
                     <b>&#8377; {totalAmount}</b>
-                  </td>
-                  <td>
-                    {cartItems.length > 0 ? (
-                      <button id="place-order-btn" onClick={placeAnOrder}>
-                        Place Order
-                      </button>
-                    ) : null}
-                  </td>
-                </tr>
-              </table>
+                  </TableCell>
+                  <TableCell id="place-order-btn" colSpan={7}>
+                    <button
+                      id="place-order-btn"
+                      className="btn btn-success"
+                      onClick={placeAnOrder}
+                    >
+                      Place Order
+                    </button>
+                  </TableCell>
+                </TableRow> : null }
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </section>
